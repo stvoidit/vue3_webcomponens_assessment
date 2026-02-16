@@ -2,8 +2,7 @@ import './style.css'
 import typescriptLogo from './typescript.svg'
 import viteLogo from '/vite.svg'
 import store from "./store"
-// createReactiveStore()
-import './counter' // Импортируем counter.ts для регистрации компонента
+import './counter'
 
 
 
