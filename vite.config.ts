@@ -6,6 +6,14 @@ export default defineConfig({
     enableNativePlugin: true
   },
   build:{
-    minify: false
+    minify: false,
+    rolldownOptions:{
+      experimental:{
+        viteMode: false,
+      },
+      optimization:{
+        inlineConst: true
+      }
+    }
   }
 })

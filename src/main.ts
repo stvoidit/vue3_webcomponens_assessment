@@ -2,7 +2,7 @@ import './style.css'
 import typescriptLogo from './typescript.svg'
 import viteLogo from '/vite.svg'
 import store from "./store"
-import './counter'
+import { type CounterComponent} from './counter'
 
 
 
@@ -18,7 +18,7 @@ const mount = () => {
       </a>
       <h1>Vite + TypeScript</h1>
       <div id="counter">count: ${store.counter}</div>
-      <div class="card">
+      <div class="card" id="btns">
         <counter-button></counter-button>
         <counter-button></counter-button>
       </div>
@@ -27,7 +27,14 @@ const mount = () => {
       </p>
     </div>
   `
+
+  const btnsElem = document.querySelector<HTMLDivElement>('#btns')!
+  const btn = document.createElement("counter-button") as CounterComponent
+  btn.setAttribute("step", "2")
+  btnsElem.appendChild(btn)
+
   return document.querySelector<HTMLDivElement>('#counter')!
+
 }
 const counterElem = mount()
 
