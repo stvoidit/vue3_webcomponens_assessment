@@ -1,14 +1,12 @@
-import './style.css'
-import typescriptLogo from './typescript.svg'
-import viteLogo from '/vite.svg'
-import store from "./store"
-import { type CounterComponent} from './counter'
+import "./style.css";
+import viteLogo from "/vite.svg";
 
-
-
+import { type CounterComponent } from "./counter";
+import store from "./store";
+import typescriptLogo from "./typescript.svg";
 
 const mount = () => {
-  document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
+    document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
     <div>
       <a href="https://vite.dev" target="_blank">
         <img src="${viteLogo}" class="logo" alt="Vite logo" />
@@ -26,19 +24,18 @@ const mount = () => {
         Click on the Vite and TypeScript logos to learn more
       </p>
     </div>
-  `
+  `;
 
-  const btnsElem = document.querySelector<HTMLDivElement>('#btns')!
-  const btn = document.createElement("counter-button") as CounterComponent
-  btn.setAttribute("step", "2")
-  btnsElem.appendChild(btn)
+    const btnsElem = document.querySelector<HTMLDivElement>("#btns")!;
+    const btn = document.createElement("counter-button") as CounterComponent;
+    btn.setAttribute("step", "2");
+    btnsElem.appendChild(btn);
 
-  return document.querySelector<HTMLDivElement>('#counter')!
-
-}
-const counterElem = mount()
+    return document.querySelector<HTMLDivElement>("#counter")!;
+};
+const counterElem = mount();
 
 const rerenderCounter = () => {
-  counterElem.innerText = `count: ${store.counter}`
-}
-store.subscribe(rerenderCounter)
+    counterElem.innerText = `count: ${store.counter}`;
+};
+store.subscribe(rerenderCounter);

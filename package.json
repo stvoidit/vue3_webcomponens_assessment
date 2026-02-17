@@ -1,20 +1,23 @@
 {
-  "name": "vue3_webcomponens_assessment",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
-  },
-  "devDependencies": {
-    "typescript": "~5.9.3",
-    "vite": "^8.0.0-beta.13"
-  },
-  "pnpm": {
-    "overrides": {
-      "vite": "^8.0.0-beta.13"
+    "name": "vue3_webcomponens_assessment",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc && vite build",
+        "preview": "vite preview",
+        "fmt": "oxfmt",
+        "fmt:check": "oxfmt --check"
+    },
+    "devDependencies": {
+        "oxfmt": "^0.33.0",
+        "typescript": "~5.9.3",
+        "vite": "^8.0.0-beta.13"
+    },
+    "pnpm": {
+        "overrides": {
+            "vite": "^8.0.0-beta.13"
+        }
     }
-  }
 }
