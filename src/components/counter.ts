@@ -1,6 +1,6 @@
 import store from "../store";
 
-import classs from "./counter.module.css";
+import classes from "./counter.module.css";
 
 class CounterComponent extends HTMLElement {
     private _buttonElement: HTMLButtonElement;
@@ -20,6 +20,7 @@ class CounterComponent extends HTMLElement {
 
     // Lifecycle метод при подключении элемента
     connectedCallback(): void {
+        console.debug({ connectedCallback: CounterComponent.name });
         store.subscribe(() => {
             this.render();
         });
@@ -27,18 +28,17 @@ class CounterComponent extends HTMLElement {
         if (step !== null && step !== "") {
             this._step = Number.parseInt(step, 10);
         }
+        this.append(this._buttonElement);
         this.render();
     }
 
     constructor() {
         super();
-        const shadowRoot = this.attachShadow({ mode: "open" });
         this._buttonElement = document.createElement("button");
         this._buttonElement.addEventListener("click", () => {
             this.incrementCounter();
         });
-        this._buttonElement.className = classs.btn;
-        shadowRoot.append(this._buttonElement);
+        this._buttonElement.className = classes.btn;
     }
 
     // Метод для обработки изменений атрибутов

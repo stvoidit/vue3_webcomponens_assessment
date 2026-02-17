@@ -51,15 +51,14 @@ const createReactiveStore = () => {
         },
 
         set(target, property, newValue: (typeof target)[keyof typeof target]) {
-            if (isExists(target, property)) {
-                if (property === "counter" && isNumber(newValue)) {
-                    target[property] = newValue;
-                    emit(target);
-                    return false;
-                }
-                return true;
+            if (!isExists(target, property)) {
+                return false;
             }
-            return false;
+            if (property === "counter" && isNumber(newValue)) {
+                target[property] = newValue;
+                emit(target);
+            }
+            return true;
         },
     });
 };

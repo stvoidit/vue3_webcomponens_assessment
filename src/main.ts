@@ -2,10 +2,12 @@ import "./style.css";
 import viteLogo from "/vite.svg";
 
 import CounterComponent from "./components/counter";
+import LogoLink from "./components/logo";
 import store from "./store";
-import typescriptLogo from "./typescript.svg?url";
+import typescriptLogo from "./typescript.svg";
 
 // Регистрация кастомного элемента
+customElements.define("logo-link", LogoLink);
 customElements.define("counter-button", CounterComponent);
 
 const mount = () => {
@@ -14,13 +16,9 @@ const mount = () => {
         return;
     }
     app.innerHTML = `
-
-      <a href="https://vite.dev" target="_blank">
-        <img src="${viteLogo}" class="logo" alt="Vite logo" />
-      </a>
-      <a href="https://www.typescriptlang.org/" target="_blank">
-        <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-      </a>
+    <div>
+      <logo-link href="https://vite.dev" src="${viteLogo}" alt="Vite logo"></logo-link>
+      <logo-link href="https://www.typescriptlang.org/" src="${typescriptLogo}" alt="TypeScript logo"></logo-link>
       <h1>Vite + TypeScript</h1>
       <div id="counter">count: ${store.counter}</div>
       <div class="card" id="btns">
@@ -30,7 +28,7 @@ const mount = () => {
       <p class="read-the-docs">
         Click on the Vite and TypeScript logos to learn more
       </p>
-
+    </div>
   `;
 
     const btnsElem = app.querySelector<HTMLDivElement>("#btns");
