@@ -1,0 +1,44 @@
+{
+    "$schema": "./node_modules/oxlint/configuration_schema.json",
+    "plugins": [
+        "typescript",
+        "import",
+        "unicorn"
+    ],
+    "categories": {
+        "correctness": "error",
+        "suspicious": "warn",
+        "pedantic": "warn",
+        "perf": "warn",
+        "style": "error",
+        "restriction": "error"
+    },
+    "rules": {
+        "eslint/no-magic-numbers": "off",
+        "no-console": "off",
+        "sort-imports": "off",
+        "typescript/explicit-function-return-type": "off",
+        "oxc/no-rest-spread-properties": "off",
+        "import/no-default-export": "off",
+        "eslint/max-statements": "off",
+        "import/no-absolute-path": "off",
+        "import/no-relative-parent-imports": "off",
+        "id-length": [
+            "off"
+        ],
+        "import/no-unassigned-import": [
+            "error",
+            {
+                "allow": [
+                    "**/*.css"
+                ]
+            }
+        ]
+    },
+    "settings": {},
+    "env": {
+        "builtin": true
+    },
+    "globals": {},
+    "ignorePatterns": []
+}

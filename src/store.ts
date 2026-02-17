@@ -9,53 +9,60 @@ class ChangeEvent<T extends object> extends Event {
     }
 }
 
-const isExists = <T extends object>(obj: T, key: PropertyKey): key is keyof T => {
-    return key in obj;
-};
+const isExists = <T extends object>(obj: T, key: PropertyKey): key is keyof T => key in obj;
 
-function createReactiveStore(initialData = { counter: 0 }) {
+const isNumber = (value: unknown): value is number => typeof value === "number";
+
+const createReactiveStore = () => {
     const emitter = new EventTarget();
 
-    const emit = <T extends object>(obj: T) => {
+    const emit = <O extends object>(obj: O) => {
         emitter.dispatchEvent(
             new ChangeEvent("change", {
-                detail: obj,
                 bubbles: true,
                 composed: true,
+                detail: obj,
             }),
         );
     };
 
-    const subscribe = (cb: EventListenerOrEventListenerObject) => {
+    const subscribe = (cb?: EventListenerOrEventListenerObject) => {
         console.debug("subscribe", cb);
+        if (!cb) {
+            return;
+        }
         emitter.addEventListener("change", cb);
     };
-    const describe = (cb: EventListenerOrEventListenerObject) => {
+    const describe = (cb?: EventListenerOrEventListenerObject) => {
         console.debug("describe", cb);
+        if (!cb) {
+            return;
+        }
         emitter.removeEventListener("change", cb);
     };
 
-    return new Proxy(
-        {
-            ...initialData,
-            subscribe,
-            describe,
+    const obj = { counter: 0, describe, subscribe };
+    return new Proxy(obj, {
+        get(target, property, receiver) {
+            if (!isExists(target, property)) {
+                return;
+            }
+            return Reflect.get(target, property, receiver);
         },
-        {
-            set(target, property, newValue) {
-                if (isExists(target, property) && target[property] !== newValue) {
+
+        set(target, property, newValue: (typeof target)[keyof typeof target]) {
+            if (isExists(target, property)) {
+                if (property === "counter" && isNumber(newValue)) {
                     target[property] = newValue;
                     emit(target);
+                    return false;
                 }
                 return true;
-            },
-
-            get(target, property, receiver) {
-                return Reflect.get(target, property, receiver);
-            },
+            }
+            return false;
         },
-    );
-}
+    });
+};
 
 const store = createReactiveStore();
 

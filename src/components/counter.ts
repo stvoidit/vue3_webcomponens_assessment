@@ -1,10 +1,10 @@
-import store from "./store";
+import store from "../store";
 
-import classs from "./button.module.css";
+import classs from "./counter.module.css";
 
-export class CounterComponent extends HTMLElement {
+class CounterComponent extends HTMLElement {
     private _buttonElement: HTMLButtonElement;
-    private _step: number = 1;
+    private _step = 1;
 
     // Статический метод для определения отслеживаемых атрибутов
     static get observedAttributes(): string[] {
@@ -12,15 +12,21 @@ export class CounterComponent extends HTMLElement {
     }
 
     // Lifecycle метод при отключения элемента
-    disconnectedCallback() {
-        store.describe(() => this.render());
+    disconnectedCallback(): void {
+        store.describe(() => {
+            this.render();
+        });
     }
 
     // Lifecycle метод при подключении элемента
-    connectedCallback() {
-        store.subscribe(() => this.render());
+    connectedCallback(): void {
+        store.subscribe(() => {
+            this.render();
+        });
         const step = this.getAttribute("step");
-        this._step = step ? parseInt(step, 10) : 1;
+        if (step !== null && step !== "") {
+            this._step = Number.parseInt(step, 10);
+        }
         this.render();
     }
 
@@ -28,24 +34,31 @@ export class CounterComponent extends HTMLElement {
         super();
         const shadowRoot = this.attachShadow({ mode: "open" });
         this._buttonElement = document.createElement("button");
-        this._buttonElement.addEventListener("click", () => this.incrementCounter());
+        this._buttonElement.addEventListener("click", () => {
+            this.incrementCounter();
+        });
         this._buttonElement.className = classs.btn;
-        shadowRoot.appendChild(this._buttonElement);
+        shadowRoot.append(this._buttonElement);
     }
 
     // Метод для обработки изменений атрибутов
-    attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-        if (oldValue == oldValue) {
+    attributeChangedCallback(name: string, oldValue: string, newValue: string): void {
+        if (newValue === oldValue) {
             return;
         }
         switch (name) {
-            case "initial-count":
-                store.counter = parseInt(newValue, 10);
+            case "initial-count": {
+                store.counter = Number.parseInt(newValue, 10);
                 this.render();
                 break;
-            case "step":
-                this._step = parseInt(newValue, 10);
+            }
+            case "step": {
+                this._step = Number.parseInt(newValue, 10);
                 break;
+            }
+            default: {
+                console.warn(`unknown prop: "${name}"`);
+            }
         }
     }
 
@@ -64,15 +77,14 @@ export class CounterComponent extends HTMLElement {
 
         // Диспетчеризация события при изменении счетчика
         const event = new CustomEvent("counter-change", {
+            bubbles: true,
+            composed: true,
             detail: {
                 currentCount: store.counter,
             },
-            bubbles: true,
-            composed: true,
         });
         this.dispatchEvent(event);
     }
 }
 
-// Регистрация кастомного элемента
-customElements.define("counter-button", CounterComponent);
+export default CounterComponent;

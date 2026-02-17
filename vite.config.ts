@@ -1,26 +1,23 @@
 import { defineConfig } from "vite";
 
 export default defineConfig({
-    plugins: [],
-    experimental: {
-        enableNativePlugin: true,
+    build: {
+        minify: false,
+        modulePreload: true,
+        rolldownOptions: {
+            experimental: {
+                viteMode: false,
+            },
+        },
+        target: "esnext",
     },
     css: {
         modules: {
             localsConvention: "camelCase",
         },
     },
-    build: {
-        target: "esnext",
-        minify: false,
-        modulePreload: false,
-        rolldownOptions: {
-            experimental: {
-                viteMode: false,
-            },
-            optimization: {
-                inlineConst: true,
-            },
-        },
+    experimental: {
+        enableNativePlugin: true,
     },
+    plugins: [],
 });
