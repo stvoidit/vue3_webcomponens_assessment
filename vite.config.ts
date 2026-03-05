@@ -2,19 +2,24 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
     build: {
+        cssMinify: "lightningcss",
         minify: false,
         modulePreload: true,
         rolldownOptions: {
             experimental: {
-                viteMode: false,
+                viteMode: true,
             },
         },
         target: "esnext",
     },
     css: {
-        modules: {
-            localsConvention: "camelCase",
+        lightningcss: {
+            cssModules: true,
+            nonStandard: {
+                deepSelectorCombinator: true,
+            },
         },
+        transformer: "lightningcss",
     },
     experimental: {
         enableNativePlugin: true,

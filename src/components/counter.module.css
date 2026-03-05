@@ -8,19 +8,17 @@
     background-color: #1a1a1a;
     cursor: pointer;
     transition: border-color 0.25s;
-}
 
-.btn:hover {
-    border-color: #646cff;
-}
+    &:hover {
+        border-color: #646cff;
+    }
+    &:focus,
+    &:focus-visible {
+        outline: 5px auto -webkit-focus-ring-color;
+    }
 
-.btn:focus,
-.btn:focus-visible {
-    outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-    .btn {
+    @media (prefers-color-scheme: light) {
         background-color: #f9f9f9;
+        color: black;
     }
 }
